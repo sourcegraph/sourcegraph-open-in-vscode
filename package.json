@@ -85,7 +85,7 @@
     "lnfs-cli": "^2.1.0",
     "mkdirp": "^1.0.4",
     "parcel-bundler": "^1.12.4",
-    "sourcegraph": "^24.0.0",
+    "sourcegraph": "^24.1.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {}

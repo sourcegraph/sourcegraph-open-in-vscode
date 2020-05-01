@@ -19,11 +19,13 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
     const absolutePath = path.join(basePath, repoBaseName, relativePath)
     const openUrl = new URL('vscode://file' + absolutePath)
-    const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
-    if (selection) {
-        openUrl.pathname += `:${selection.start.line + 1}`
-        if (selection.start.character !== 0) {
-            openUrl.pathname += `:${selection.start.character + 1}`
+    if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
+        const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
+        if (selection) {
+            openUrl.pathname += `:${selection.start.line + 1}`
+            if (selection.start.character !== 0) {
+                openUrl.pathname += `:${selection.start.character + 1}`
+            }
         }
     }
     return openUrl
