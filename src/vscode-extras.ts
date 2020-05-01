@@ -33,7 +33,11 @@ function getOpenUrl(textDocumentUri: URL): URL {
 
 export function activate(ctx: sourcegraph.ExtensionContext): void {
     ctx.subscriptions.add(
-        sourcegraph.commands.registerCommand('vscode.open.file', async (uri: string) => {
+        sourcegraph.commands.registerCommand('vscode.open.file', async (uri?: string) => {
+            if (!uri) {
+                const viewer = sourcegraph.app.activeWindow?.activeViewComponent
+                uri = viewerUri(viewer)
+            }
             if (!uri) {
                 throw new Error('No file currently open')
             }
@@ -41,4 +45,15 @@ export function activate(ctx: sourcegraph.ExtensionContext): void {
             await sourcegraph.commands.executeCommand('open', openUrl.href)
         })
     )
+}
+
+function viewerUri(viewer: sourcegraph.ViewComponent | undefined): string | undefined {
+    switch (viewer?.type) {
+        case 'CodeEditor':
+            return viewer.document.uri
+        case 'DirectoryViewer':
+            return viewer.directory.uri.href
+        default:
+            return undefined
+    }
 }
