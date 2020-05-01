@@ -34,6 +34,9 @@ function getOpenUrl(textDocumentUri: URL): URL {
 export function activate(ctx: sourcegraph.ExtensionContext): void {
     ctx.subscriptions.add(
         sourcegraph.commands.registerCommand('vscode.open.file', async (uri: string) => {
+            if (!uri) {
+                throw new Error('No file currently open')
+            }
             const openUrl = getOpenUrl(new URL(uri))
             await sourcegraph.commands.executeCommand('open', openUrl.href)
         })
