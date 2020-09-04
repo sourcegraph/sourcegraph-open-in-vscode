@@ -13,7 +13,7 @@ function getOpenUrl(textDocumentUri: URL): URL {
     }
     if (!path.isAbsolute(basePath)) {
         throw new Error(
-            `\`vscode.open.basePath\` value \`${basePath}\` is not an absolute path. Please correct the error in your [user settings](${sourcegraph.internal.sourcegraphURL.href}user/settings).`
+            `\`vscode.open.basePath\` value \`${basePath}\` is not an absolute path. Please correct the error in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}).`
         )
     }
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
