@@ -8,7 +8,7 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const basePath: unknown = sourcegraph.configuration.get().value['vscode.open.basePath']
     if (typeof basePath !== 'string') {
         throw new Error(
-            `Setting \`vscode.open.basePath\` must be set in your [user settings](${sourcegraph.internal.sourcegraphURL.href}user/settings) to open files in VS Code.`
+            `Setting \`vscode.open.basePath\` must be set in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
         )
     }
     if (!path.isAbsolute(basePath)) {
