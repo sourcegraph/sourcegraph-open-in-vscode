@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/sourcegraph/sourcegraph/master/shared/src/schema/extension.schema.json",
+  "$schema": "https://raw.githubusercontent.com/sourcegraph/sourcegraph/main/shared/src/schema/extension.schema.json",
   "name": "vscode-extras",
   "description": "Integrates Sourcegraph with your local VS Code",
   "publisher": "sourcegraph",
@@ -9,7 +9,7 @@
   ],
   "wip": false,
   "categories": [
-    "Other"
+    "Code editors"
   ],
   "tags": [
     "vscode",
