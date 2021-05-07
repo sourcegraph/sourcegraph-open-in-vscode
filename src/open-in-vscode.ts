@@ -1,5 +1,5 @@
 import * as sourcegraph from 'sourcegraph'
-import * as path from 'path'
+import path from './path'
 
 function getOpenUrl(textDocumentUri: URL): URL {
     const rawRepoName = decodeURIComponent(textDocumentUri.hostname + textDocumentUri.pathname)
@@ -18,7 +18,16 @@ function getOpenUrl(textDocumentUri: URL): URL {
     }
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
     const absolutePath = path.join(basePath, repoBaseName, relativePath)
-    const openUrl = new URL('vscode://file' + absolutePath)
+
+    // if windows add an extra slash in the beginning
+    let uri = '';
+    if (/^[a-zA-Z]:\\/.test(basePath)) {
+        uri = 'vscode://file/' + absolutePath
+    } else {
+        uri = 'vscode://file' + absolutePath
+    }
+    console.log(uri)
+    const openUrl = new URL(uri)
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
         if (selection) {
