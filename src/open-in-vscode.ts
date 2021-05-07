@@ -26,7 +26,6 @@ function getOpenUrl(textDocumentUri: URL): URL {
     } else {
         uri = 'vscode://file' + absolutePath
     }
-    console.log(uri)
     const openUrl = new URL(uri)
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
