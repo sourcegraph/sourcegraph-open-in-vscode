@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/sourcegraph/sourcegraph/master/shared/src/schema/extension.schema.json",
+  "$schema": "https://raw.githubusercontent.com/sourcegraph/sourcegraph/main/client/shared/src/schema/extension.schema.json",
   "name": "open-in-vscode",
   "description": "Open the current file in VS Code",
   "publisher": "sourcegraph",
