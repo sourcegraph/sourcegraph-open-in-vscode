@@ -53,7 +53,7 @@
           "type": "string"
         },
         "vscode.open.uncPath": {
-          "description": "Set true to enable support for UNC path, which uses double slashes or backslashes to precede the name of the computer volume (as used in Windows or WSL).",
+          "description": "Set true to enable support for Universal naming convention (UNC) paths, which use double slashes or backslashes before the host device name (as used in Windows or WSL).",
           "type": "boolean"
         }
       }
