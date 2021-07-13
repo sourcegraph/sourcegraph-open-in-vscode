@@ -6,5 +6,60 @@ Adds a button at the top of files in both Sourcegraph app and code hosts like Gi
 
 ## Configuration
 
-Set `vscode.open.basePath` in your user settings to a local folder that contains your Git repositories.
+- Set `vscode.open.basePath` in your user settings to a local folder that contains your Git repositories.
 The extension will try to open the file in a clone named by the last segment of the repository name in that folder.
+
+- Set `vscode.open.uncPath` to true in your user settings to enable support for UNC (Universal Naming Convention) paths.
+
+## Examples
+
+### Mac
+
+To open repository files in your Documents directory:
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.basePath": "/Users/USERNAME/Documents/"
+}
+```
+
+### Windows
+
+To open repository files in your Documents directory:
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.basePath": "/Users/USERNAME/Documents/"
+}
+```
+
+You may also use an absolute file path from the root of drive C: with the following setting:
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true,
+  },
+  "vscode.open.basePath": "/C:/Users/USERNAME/Documents/"
+}
+```
+
+### WSL
+
+To open repository files in your Home directory:
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.basePath": "//wsl$/Ubuntu-18.04/home",
+  "vscode.open.uncPath": true
+}
+```
