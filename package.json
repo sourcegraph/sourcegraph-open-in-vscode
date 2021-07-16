@@ -51,6 +51,10 @@
         "vscode.open.basePath": {
           "description": "The file path on the machine to the folder that is expected to contain all repositories.",
           "type": "string"
+        },
+        "vscode.open.uncPath": {
+          "description": "Set true to enable support for Universal naming convention (UNC) paths, which use double slashes or backslashes before the host device name (as used in Windows or WSL).",
+          "type": "boolean"
         }
       }
     }

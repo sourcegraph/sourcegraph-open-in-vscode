@@ -6,6 +6,7 @@ function getOpenUrl(textDocumentUri: URL): URL {
     // TODO support different folder layouts, e.g. repo nested under owner name
     const repoBaseName = rawRepoName.split('/').pop()!
     const basePath: unknown = sourcegraph.configuration.get().value['vscode.open.basePath']
+    const isUNC: boolean = sourcegraph.configuration.get().value['vscode.open.uncPath']
     if (typeof basePath !== 'string') {
         throw new Error(
             `Setting \`vscode.open.basePath\` must be set in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
@@ -19,9 +20,9 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
     const absolutePath = path.join(basePath, repoBaseName, relativePath)
 
-    // if windows add an extra slash in the beginning
+    // if windows or enabled UNC path, add an extra slash in the beginning
     let uri = '';
-    if (/^[a-zA-Z]:\\/.test(basePath)) {
+    if (/^[a-zA-Z]:\\/.test(basePath) || isUNC) {
         uri = 'vscode://file/' + absolutePath
     } else {
         uri = 'vscode://file' + absolutePath
