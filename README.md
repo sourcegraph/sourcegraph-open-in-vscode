@@ -71,4 +71,4 @@ To open repository files in your Home directory:
 1. Run `yarn && yarn run serve` and keep the Parcel bundler process running.
 1. [Sideload the extension](https://docs.sourcegraph.com/extensions/authoring/local_development) (at the URL http://localhost:1234 by default) on your Sourcegraph instance or Sourcegraph.com.
 
-When you edit a source file in your editor, Parcel will recompile the extension. Reload the Sourcegraph web page to use run the updated extension.
+When you edit a source file in your editor, Parcel will recompile the extension. Reload the Sourcegraph web page to use the updated extension.
