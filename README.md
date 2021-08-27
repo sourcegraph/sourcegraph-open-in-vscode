@@ -11,6 +11,8 @@ The extension will try to open the file in a clone named by the last segment of 
 
 - Set `vscode.open.uncPath` to true in your user settings to enable support for UNC (Universal Naming Convention) paths.
 
+- Set `vscode.open.insidersMode` to true in your user settings to open files in VS Code Insiders instead of regular VS Code.
+
 ## Examples
 
 ### Mac
@@ -63,3 +65,10 @@ To open repository files in your Home directory:
   "vscode.open.uncPath": true
 }
 ```
+
+## Development
+
+1. Run `yarn && yarn run serve` and keep the Parcel bundler process running.
+1. [Sideload the extension](https://docs.sourcegraph.com/extensions/authoring/local_development) (at the URL http://localhost:1234 by default) on your Sourcegraph instance or Sourcegraph.com.
+
+When you edit a source file in your editor, Parcel will recompile the extension. Reload the Sourcegraph web page to use the updated extension.
