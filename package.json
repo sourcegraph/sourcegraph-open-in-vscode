@@ -7,7 +7,7 @@
   "activationEvents": [
     "*"
   ],
-  "wip": false,
+  "wip": true,
   "categories": [],
   "tags": [
     "vscode",
