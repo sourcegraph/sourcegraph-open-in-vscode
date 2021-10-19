@@ -66,6 +66,20 @@ To open repository files in your Home directory:
 }
 ```
 
+### Replacements
+
+Adds `sourcegraph-` in front of the string that matches the `(?<=Documents\/)(.*[\\\/])` RegExp pattern, which is the string after `Documents/` and before the final slash. This turns the final url from `vscode://file//Users/USERNAME/Documents/REPO-NAME/package.json` to `vscode://file//Users/USERNAME/Documents/sourcegraph-REPO-NAME/package.json`
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.basePath": "/Users/USERNAME/Documents/",
+  "vscode.open.replacements": {"(?<=Documents\/)(.*[\\\/])": "sourcegraph-$1"},
+}
+```
+
 ## Development
 
 1. Run `yarn && yarn run serve` and keep the Parcel bundler process running.
