@@ -8,6 +8,8 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const basePath: unknown = sourcegraph.configuration.get().value['vscode.open.basePath']
     const isUNC: boolean = sourcegraph.configuration.get().value['vscode.open.uncPath']
     const insidersMode: boolean = sourcegraph.configuration.get().value['vscode.open.insidersMode']
+    const replacements: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.replacements']
+    console.log(replacements)
     if (typeof basePath !== 'string') {
         throw new Error(
             `Setting \`vscode.open.basePath\` must be set in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
@@ -26,19 +28,28 @@ function getOpenUrl(textDocumentUri: URL): URL {
     // check if vscode-insiders mode is enabled
     const mode = insidersMode ? 'vscode-insiders' : 'vscode';
     // construct uri
-    const uri = mode + '://file' + uncPath + absolutePath;
+    let uri = mode + '://file' + uncPath + absolutePath;
 
-    const openUrl = new URL(uri)
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
         if (selection) {
-            openUrl.pathname += `:${selection.start.line + 1}`
+            uri += `:${selection.start.line + 1}`
             if (selection.start.character !== 0) {
-                openUrl.pathname += `:${selection.start.character + 1}`
+                uri += `:${selection.start.character + 1}`
             }
         }
     }
-    return openUrl
+    // Run replacements if any
+    if(replacements) {
+        for (const replacement in replacements) {
+            if (typeof replacement === 'string') {
+                const POST_REGEX = new RegExp(replacement);
+                uri = uri.replace(POST_REGEX, replacements[replacement])
+            }
+        }
+    }
+
+    return new URL(uri)
 }
 
 export function activate(ctx: sourcegraph.ExtensionContext): void {
