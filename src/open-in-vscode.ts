@@ -9,7 +9,8 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const isUNC: boolean = sourcegraph.configuration.get().value['vscode.open.uncPath']
     const insidersMode: boolean = sourcegraph.configuration.get().value['vscode.open.insidersMode']
     const replacements: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.replacements']
-    console.log(replacements)
+    const remoteHost: string = sourcegraph.configuration.get().value['vscode.open.remoteHost']
+
     if (typeof basePath !== 'string') {
         throw new Error(
             `Setting \`vscode.open.basePath\` must be set in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
@@ -26,9 +27,9 @@ function getOpenUrl(textDocumentUri: URL): URL {
     // if windows or enabled UNC path, add an extra slash in the beginning
     const uncPath = /^[a-zA-Z]:\\/.test(basePath) || isUNC ? '/' : '';
     // check if vscode-insiders mode is enabled
-    const mode = insidersMode ? 'vscode-insiders' : 'vscode';
+    const mode = insidersMode ? 'vscode-insiders://' : 'vscode://';
     // construct uri
-    let uri = mode + '://file' + uncPath + absolutePath;
+    let uri = remoteHost ? mode + 'vscode-remote/ssh-remote+' + remoteHost + uncPath + absolutePath : mode + 'file' + uncPath + absolutePath;
 
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
