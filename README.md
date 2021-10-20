@@ -2,22 +2,45 @@
 
 Adds a button to the Sourcegraph's extension panel and at the top of files in code hosts like GitHub (when the Sourcegraph browser extension is installed) that will open the current file in VS Code.
 
+**This extension requires all git repos to be already cloned under the base path with their original names.**
+
 ![image](https://user-images.githubusercontent.com/10532611/79975469-550e0180-849b-11ea-83cb-54e9e25225d6.png)
 
 ## Configuration
 
-- Set `vscode.open.basePath` in your user settings to a local folder that contains your Git repositories.
-The extension will try to open the file in a clone named by the last segment of the repository name in that folder.
+Please add the following options in your User Settings to configure the extension:
 
-- Set `vscode.open.uncPath` to true in your user settings to enable support for UNC (Universal Naming Convention) paths.
+- `vscode.open.basePath`: [REQUIRED] String. The absolute path on your local machine that contains your Git repositories.
+The extension will try to open the file in a clone named by the last segment of the repository name in that folder. This extension requires all git repos to be already cloned under the base path with their original names.
 
-- Set `vscode.open.insidersMode` to true in your user settings to open files in VS Code Insiders instead of regular VS Code.
+- `vscode.open.uncPath` [OPTIONAL] Boolean. Set option to `true` in your user settings to enable support for UNC (Universal Naming Convention) paths.
 
-- Set `vscode.open.replacements` to an object with pairs of strings, where each key will be replaced by its value in the final url. The key can be a string or a RegExp, and the value must be a string. For example, using `"openineditor.replacements": {"sourcegraph-": ""}` will remove `sourcegraph-` from the final URL.
+- `vscode.open.insidersMode` [OPTIONAL] Boolean. Set option to true in your user settings to open files in VS Code Insiders instead of regular VS Code.
 
-- Set `vscode.open.remoteHost` to `USER@HOSTNAME` to work with remote repositories. **This requires VS Code extension [Remote Development by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) to work.** Example: `"vscode.open.remoteHost": "USER@HOSTNAME"`.
+- `vscode.open.replacements` [OPTIONAL] Object. Take object with pairs of strings, where each key will be replaced by its value in the final url. The key can be a string or a RegExp, and the value must be a string. For example, using `"openineditor.replacements": {"sourcegraph-": ""}` will remove `sourcegraph-` from the final URL.
+
+- `vscode.open.remoteHost` [OPTIONAL] String. Set option to your desired `USER@HOSTNAME` to work with remote repositories. **This requires VS Code extension [Remote Development by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) to work.** Example: `"vscode.open.remoteHost": "USER@HOSTNAME"`.
+
+- `vscode.open.osPaths`: [OPTIONAL] Object. We will use the assigned path for the detected Operating System when available. If no platform is detected then we will keep using the path provided with `vscode.open.basePath`. Currently support `"windows"`, `"mac"`, and `"linux"` as keys.
 
 ## Examples
+
+### All OS
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.osPaths": {
+    "windows": "/C:/Users/USERNAME/folder/",
+    "mac": "/Users/USERNAME/folder/",
+    "linux": "/home/USERNAME/folder/"
+  },
+  // set basePath as fallback path when no operation system is detected
+  "vscode.open.basePath": "/Users/USERNAME/Documents/",
+}
+```
 
 ### Mac
 

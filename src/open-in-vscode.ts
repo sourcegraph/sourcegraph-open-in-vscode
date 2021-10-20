@@ -5,20 +5,32 @@ function getOpenUrl(textDocumentUri: URL): URL {
     const rawRepoName = decodeURIComponent(textDocumentUri.hostname + textDocumentUri.pathname)
     // TODO support different folder layouts, e.g. repo nested under owner name
     const repoBaseName = rawRepoName.split('/').pop()!
-    const basePath: unknown = sourcegraph.configuration.get().value['vscode.open.basePath']
+    let basePath: string = sourcegraph.configuration.get().value['vscode.open.basePath']
+    const osPaths: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.osPaths']
     const isUNC: boolean = sourcegraph.configuration.get().value['vscode.open.uncPath']
     const insidersMode: boolean = sourcegraph.configuration.get().value['vscode.open.insidersMode']
     const replacements: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.replacements']
     const remoteHost: string = sourcegraph.configuration.get().value['vscode.open.remoteHost']
 
+    // check platform and use assigned path if osPaths is configured;
+    if(osPaths){
+        if (navigator.userAgent.includes('Win') && osPaths.windows) {
+            basePath = osPaths.windows;
+        } else if (navigator.userAgent.includes('Mac') && osPaths.mac) {
+            basePath = osPaths.mac;
+        } else if (navigator.userAgent.includes('Linux') && osPaths.linux) {
+            basePath = osPaths.linux;
+        }
+    }
+    
     if (typeof basePath !== 'string') {
         throw new Error(
-            `Setting \`vscode.open.basePath\` must be set in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
+            `Setting \`vscode.open.basePath\` must be included in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to open files in VS Code.`
         )
     }
     if (!path.isAbsolute(basePath)) {
         throw new Error(
-            `\`vscode.open.basePath\` value \`${basePath}\` is not an absolute path. Please correct the error in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}).`
+            `\`${basePath}\` is not an absolute path. Please correct the error in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}).`
         )
     }
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
