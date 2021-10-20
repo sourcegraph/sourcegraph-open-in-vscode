@@ -2,7 +2,7 @@
 
 Adds a button to the Sourcegraph's extension panel and at the top of files in code hosts like GitHub (when the Sourcegraph browser extension is installed) that will open the current file in VS Code.
 
-**This extension requires all git repos to be already cloned under the base path with their original names.**
+**This extension requires all git repos to be cloned and available on your local machine.**
 
 ![image](https://user-images.githubusercontent.com/10532611/79975469-550e0180-849b-11ea-83cb-54e9e25225d6.png)
 
@@ -11,7 +11,7 @@ Adds a button to the Sourcegraph's extension panel and at the top of files in co
 Please add the following options in your User Settings to configure the extension:
 
 - `vscode.open.basePath`: [REQUIRED] String. The absolute path on your local machine that contains your Git repositories.
-The extension will try to open the file in a clone named by the last segment of the repository name in that folder. This extension requires all git repos to be already cloned under the base path with their original names.
+The extension will try to open the file in a clone named by the last segment of the repository name in that folder. This extension requires all git repos to be already cloned under the provided path with their original names, which can then be altered using the `vscode.open.replacements` option.
 
 - `vscode.open.uncPath` [OPTIONAL] Boolean. Set option to `true` in your user settings to enable support for UNC (Universal Naming Convention) paths.
 
