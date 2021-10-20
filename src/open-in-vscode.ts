@@ -8,7 +8,7 @@ function getOpenUrl(textDocumentUri: URL): URL {
     let basePath: string = sourcegraph.configuration.get().value['vscode.open.basePath']
     const osPaths: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.osPaths']
     const isUNC: boolean = sourcegraph.configuration.get().value['vscode.open.uncPath']
-    const insidersMode: boolean = sourcegraph.configuration.get().value['vscode.open.insidersMode']
+    const useMode: string = sourcegraph.configuration.get().value['vscode.open.useMode']
     const replacements: Record<string, string> = sourcegraph.configuration.get().value['vscode.open.replacements']
     const remoteHost: string = sourcegraph.configuration.get().value['vscode.open.remoteHost']
 
@@ -35,23 +35,45 @@ function getOpenUrl(textDocumentUri: URL): URL {
     }
     const relativePath = decodeURIComponent(textDocumentUri.hash.slice('#'.length))
     const absolutePath = path.join(basePath, repoBaseName, relativePath)
-
     // if windows or enabled UNC path, add an extra slash in the beginning
     const uncPath = /^[a-zA-Z]:\\/.test(basePath) || isUNC ? '/' : '';
-    // check if vscode-insiders mode is enabled
-    const mode = insidersMode ? 'vscode-insiders://' : 'vscode://';
-    // construct uri
-    let uri = remoteHost ? mode + 'vscode-remote/ssh-remote+' + remoteHost + uncPath + absolutePath : mode + 'file' + uncPath + absolutePath;
+
+    // check for configured mode then construct uri. uses 'vscode://' by default.
+    let uri = '';
+    switch(useMode) {
+        case 'insiders':
+            uri = 'vscode-insiders://file' + uncPath + absolutePath;
+            break;
+        case 'github':
+            if(textDocumentUri.hostname !== 'github.com'){
+                throw new Error(
+                    'VS Code only supports opening repositories from GitHub remotely.'
+                )
+            }
+            uri = 'vscode://GitHub.remotehub/open?url=https://' + rawRepoName + '/blob/' + decodeURIComponent(textDocumentUri.search.slice('?'.length)) + '/' + relativePath;
+            break;
+        case 'ssh':
+            if(!remoteHost){
+                throw new Error(
+                    `Setting \`vscode.open.remoteHost\` must be included in your [user settings](${new URL('/user/settings', sourcegraph.internal.sourcegraphURL.href).href}) to run VS Code in ssh mode.`
+                )
+            }
+            uri = 'vscode://vscode-remote/ssh-remote+' + remoteHost + uncPath + absolutePath;
+            break;
+        default:
+            uri = 'vscode://file' + uncPath + absolutePath;
+    }
 
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
-        if (selection) {
+        if (selection && useMode !== 'github') {
             uri += `:${selection.start.line + 1}`
             if (selection.start.character !== 0) {
                 uri += `:${selection.start.character + 1}`
             }
         }
     }
+
     // Run replacements if any
     if(replacements) {
         for (const replacement in replacements) {
