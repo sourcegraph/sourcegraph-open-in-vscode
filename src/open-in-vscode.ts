@@ -58,7 +58,7 @@ function getOpenUrl(textDocumentUri: URL): URL {
 
     if (sourcegraph.app.activeWindow?.activeViewComponent?.type === 'CodeEditor') {
         const selection = sourcegraph.app.activeWindow?.activeViewComponent?.selection
-        if (selection && useMode !== 'github') {
+        if (selection) {
             uri += `:${selection.start.line + 1}`
             if (selection.start.character !== 0) {
                 uri += `:${selection.start.character + 1}`

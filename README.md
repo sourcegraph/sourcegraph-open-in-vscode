@@ -39,7 +39,7 @@ The extension will try to open the file in a clone named by the last segment of 
     "mac": "/Users/USERNAME/folder/",
     "linux": "/home/USERNAME/folder/"
   },
-  // set basePath as fallback path when no operation system is detected
+  // set basePath as fallback path when no operating system is detected
   "vscode.open.basePath": "/Users/USERNAME/Documents/",
 }
 ```
