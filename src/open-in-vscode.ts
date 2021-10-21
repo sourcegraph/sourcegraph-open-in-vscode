@@ -44,14 +44,6 @@ function getOpenUrl(textDocumentUri: URL): URL {
         case 'insiders':
             uri = 'vscode-insiders://file' + uncPath + absolutePath;
             break;
-        case 'github':
-            if(textDocumentUri.hostname !== 'github.com'){
-                throw new Error(
-                    'VS Code only supports opening repositories from GitHub remotely.'
-                )
-            }
-            uri = 'vscode://GitHub.remotehub/open?url=https://' + rawRepoName + '/blob/' + decodeURIComponent(textDocumentUri.search.slice('?'.length)) + '/' + relativePath;
-            break;
         case 'ssh':
             if(!remoteHost){
                 throw new Error(

@@ -57,20 +57,20 @@
           "type": "boolean"
         },
         "vscode.open.useMode": {
-          "description": "Specifies the mode you would like to use with VS Code.",
+          "description": "Open VS Code in one of the following modes: 'insiders', 'ssh'.",
           "type": "string",
-          "enum": ["insiders", "github", "ssh"]
+          "enum": ["insiders", "ssh"]
         },
         "vscode.open.osPaths": {
-          "description": "We will use the assigned path for the detected Operating System when available. If no platform is detected then we will keep using the path provided with `vscode.open.basePath`. Currently support windows, mac, and linux as keys.",
+          "description": "The file path on each platform to the folder that is expected to contain all repositories. Currently supports 'windows', 'mac', and 'linux' as keys.",
           "type": "object"
         },
         "vscode.open.replacements": {
-          "description": "Take key-value pairs, where each key will be replaced by its value in the final url. The key can be a string or a RegExp, and the value must be a string.",
+          "description": "Take key-value pairs where each key is replaced by its value in the final url. The key can be a string or a RegExp pattern, and the value must be a string. The final path must be a valid path on the machine to the folder that is expected to contain all repositories.",
           "type": "object"
         },
         "vscode.open.remoteHost": {
-          "description": "Set option to your desired `USER@HOSTNAME` to work with remote repositories.",
+          "description": "Set option to your desired `USER@HOSTNAME` to work with remote repositories when using the 'ssh' mode.",
           "type": "string"
         }
       }

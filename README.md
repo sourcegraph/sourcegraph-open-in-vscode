@@ -17,10 +17,9 @@ The extension will try to open the file in a clone named by the last segment of 
 
 - `vscode.open.useMode`: [OPTIONAL] String. Specifies the mode you would like to use with VS Code. Currently support opening VS Code in the following modes:
   - `"insiders"`: Open files in VS Code Insiders instead of regular VS Code.
-  - `"github"`: Open files in a remote setting without needing to clone the repository. This requires VS Code extension [GitHub Repositories by GitHub](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) to work.
   - `"ssh"`: Open files from a remote server via ssh. This requires `vscode.open.remoteHost` configured in your User Setting and VS Code extension [Remote Development by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) installed in your VS Code to work.
 
-- `vscode.open.replacements`: [OPTIONAL] Object. Take object with pairs of strings, where each key will be replaced by its value in the final url. The key can be a string or a RegExp, and the value must be a string. For example, using `"openineditor.replacements": {"sourcegraph-": ""}` will remove `sourcegraph-` from the final URL.
+- `vscode.open.replacements`: [OPTIONAL] Object. Take object with pairs of strings, where each key will be replaced by its value in the final url. The key can be a string or a RegExp, and the value must be a string. For example, using `"vscode.open.replacements": {"sourcegraph-": ""}` will remove `sourcegraph-` from the final URL.
 
 - `vscode.open.remoteHost`: [OPTIONAL] String. Set option to your desired `USER@HOSTNAME` to work with remote repositories. This requires VS Code extension [Remote Development by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) with `"vscode.open.useMode": "ssh"` configured in your Sourcegraph's User Setting to work.
 
@@ -28,7 +27,7 @@ The extension will try to open the file in a clone named by the last segment of 
 
 ## Examples
 
-### All OS
+### Configured base paths for different platforms
 
 ```json
 {
@@ -129,24 +128,6 @@ To open directory where the repository files reside in a remote server:
   "vscode.open.remoteHost": "USER@HOSTNAME",
   // Removes file name as the vscode-remote protocol handler only supports directory-opening
   "vscode.open.replacements": {"\/[^\/]*$": ""}, 
-}
-```
-
-### GitHub Remote Repositories
-
-**This requires VS Code extension [GitHub Repositories by GitHub](https://marketplace.visualstudio.com/items?itemName=GitHub.remotehub) to work.**
-
-To open a file from GitHub without cloning the repository locally:
-
-```json
-{
-  "extensions": {
-    "sourcegraph/open-in-vscode": true
-  },
-  // basePath is required for the extension to work even when running in virtual mode
-  "vscode.open.basePath": "/Users/USERNAME/Documents/",
-  // Specifies extension to run VS Code with the GitHub Remote Repositories extension
-  "vscode.open.useMode": "github",
 }
 ```
 
