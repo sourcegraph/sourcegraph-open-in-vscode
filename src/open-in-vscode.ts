@@ -63,10 +63,14 @@ function getOpenUrl(textDocumentUri: URL): URL {
             if (selection.start.character !== 0) {
                 uri += `:${selection.start.character + 1}`
             }
+        } else if(remoteHost) {
+            // :line is required for the vscode protocol to identify files and folders
+            // if no line is selected, we will always open files with line 1 selected
+            uri += ':1';
         }
     }
 
-    // Run replacements if any
+    // Run replacements if available
     if(replacements) {
         for (const replacement in replacements) {
             if (typeof replacement === 'string') {

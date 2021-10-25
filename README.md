@@ -113,7 +113,7 @@ Adds `sourcegraph-` in front of the string that matches the `(?<=Documents\/)(.*
 
 **This requires VS Code extension [Remote Development by Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) to work.**
 
-To open directory where the repository files reside in a remote server:
+To open repository files reside in a remote server:
 
 ```json
 {
@@ -126,7 +126,20 @@ To open directory where the repository files reside in a remote server:
   "vscode.open.useMode": "ssh",
   // Replaces USER and HOSTNAME as appropriate
   "vscode.open.remoteHost": "USER@HOSTNAME",
-  // Removes file name as the vscode-remote protocol handler only supports directory-opening
+}
+```
+
+### Open folders instead of files
+
+To open directory where the repository files reside:
+
+```json
+{
+  "extensions": {
+    "sourcegraph/open-in-vscode": true
+  },
+  "vscode.open.basePath": "/Users/USERNAME/Documents/",
+  // Use RegExp to remove file names
   "vscode.open.replacements": {"\/[^\/]*$": ""}, 
 }
 ```
