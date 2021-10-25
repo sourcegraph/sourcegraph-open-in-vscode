@@ -85,7 +85,7 @@
   "devDependencies": {
     "@sourcegraph/eslint-config": "^0.16.0",
     "@sourcegraph/tsconfig": "^4.0.1",
-    "@types/node": "^13.13.2",
+    "@types/node": "14.17.32",
     "eslint": "^6.8.0",
     "lnfs-cli": "^2.1.0",
     "mkdirp": "^1.0.4",
