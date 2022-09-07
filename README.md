@@ -1,5 +1,14 @@
 # VS Code Sourcegraph extension
 
+## ⚠️ Deprecation notice
+
+**Sourcegraph extensions have been deprecated with the September 2022 Sourcegraph
+release. [Learn more](https://docs.sourcegraph.com/extensions/deprecation).**
+
+The repo and the docs below are kept to support older Sourcegraph versions.
+
+## Description
+
 Adds a button to the Sourcegraph's extension panel and at the top of files in code hosts like GitHub (when the Sourcegraph browser extension is installed) that will open the current file in VS Code.
 
 **This extension requires all git repos to be cloned and available on your local machine.**
