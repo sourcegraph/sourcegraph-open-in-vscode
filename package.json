@@ -103,7 +103,7 @@
     "@sourcegraph/eslint-config": "^0.16.0",
     "@sourcegraph/tsconfig": "^4.0.1",
     "@types/node": "16.18.3",
-    "eslint": "^8.25.0",
+    "eslint": "^8.26.0",
     "lnfs-cli": "^2.1.0",
     "mkdirp": "^1.0.4",
     "parcel-bundler": "^1.12.4",
