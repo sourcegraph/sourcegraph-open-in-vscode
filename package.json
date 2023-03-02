@@ -108,7 +108,7 @@
     "mkdirp": "^1.0.4",
     "parcel-bundler": "^1.12.4",
     "sourcegraph": "^24.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.9.5"
   },
   "dependencies": {}
 }
