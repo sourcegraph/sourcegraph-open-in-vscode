@@ -100,7 +100,7 @@
     "last 1 Safari versions"
   ],
   "devDependencies": {
-    "@sourcegraph/eslint-config": "^0.34.0",
+    "@sourcegraph/eslint-config": "^0.35.0",
     "@sourcegraph/tsconfig": "^4.0.1",
     "@types/node": "18.18.4",
     "eslint": "^8.51.0",
